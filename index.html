@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Bank</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+</head>
+<body>
+    <div id="login-area">
+        <h1 class="text-center">Welcome To Personal Bank</h1>
+        <div class="submit-area">
+            <input type="email" class="form-control" placeholder="Email">
+            </br>
+            <input type="password" class="form-control" placeholder="password">
+            </br>
+            <button id="enter" class="btn btn-success">Enter</button>
+        </div>
+    </div>
+    <div id="transaction-area">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="deposit status">
+                    <h5>Deposit</h5>
+                    <h2>$<span id="current-amount">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="withdraw status">
+                    <h5>Withdraw</h5>
+                    <h2>$<span id="current-withdraw">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="balance status">
+                    <h5>Balance</h5>
+                    <h2>$<span id="current-balance">1240</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Deposit</h4>
+                    <input type="text" id="deposit-amount" class="form-control" placeholder="$ amount want to deposit">
+                    </br>
+                    <button id="add-deposit" class="btn btn-success">Deposit</button>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input type="text" id='withdraw-amount' class="form-control"
+                        placeholder="$ amount want to withdraw">
+                    </br>
+                    <button id="deduct-withdraw" class="btn btn-success">Withdraw</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        //login button event handler
+        document.getElementById('enter').addEventListener('click', function () {
+            document.getElementById('login-area').style.display = 'none';
+            document.getElementById('transaction-area').style.display = 'block'
+        })
+        //deposit button event handler
+        document.getElementById('add-deposit').addEventListener('click', function () {
+            const depositValue = getInputNumber('deposit-amount')
+
+            updateSpanTag('current-amount', depositValue);
+            updateSpanTag('current-balance', depositValue);
+
+            document.getElementById('deposit-amount').value = '';
+
+        })
+        //withdraw button event handler
+        document.getElementById('deduct-withdraw').addEventListener('click', function () {
+            const withdrawValue = getInputNumber('withdraw-amount');
+            updateSpanTag('current-withdraw', withdrawValue);
+            updateSpanTag('current-balance', -1 * withdrawValue);
+
+            document.getElementById('withdraw-amount').value = '';
+
+        })
+
+        function getInputNumber(id) {
+            const amount = document.getElementById(id).value;
+            const inputValue = parseFloat(amount);
+            return inputValue;
+        }
+        function updateSpanTag(id, addedValue) {
+            const currentAmount = document.getElementById(id).innerText;
+            const currentAmountValue = parseFloat(currentAmount);
+            const totalAmount = addedValue + currentAmountValue;
+            document.getElementById(id).innerText = totalAmount;
+        }
+    </script>
+
+
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+</body>
+</html>
